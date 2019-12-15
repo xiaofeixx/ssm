@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<!--
+    <bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/flim_video?serverTimezone = UTC"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>-->
+    <mybatis:scan base-package="com.xiaofei.dao"/>
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource" />
+
+    <context:component-scan base-package="com.xiaofei"/>
+<context:property-override location="classpath:db.properties"/>
+
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="dataSource">
+<!--        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/xiaofei/dao/**/*.xml"/>-->
+</bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+ <!--   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.xiaofei.dao"/>
+    </bean>-->
+</beans>
