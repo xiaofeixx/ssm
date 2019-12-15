@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofei.dao.FlimMapper">
+
+    <select id="selectByFlinName" parameterType="java.lang.String" resultType="com.xiaofei.entity.FlimVideo">
+        select * from  flimvideo  where  video_name= #{video_name}
+    </select>
+
+
+</mapper>
